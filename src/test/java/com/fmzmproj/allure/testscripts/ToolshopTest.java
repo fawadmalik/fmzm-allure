@@ -1,6 +1,8 @@
 package com.fmzmproj.allure.testscripts;
 
 import com.fmzmproj.allure.pages.HomePage;
+import io.qameta.allure.Step;
+import org.testng.Reporter;
 import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,5 +20,10 @@ public class ToolshopTest extends TestBase {
         HomePage homePage = new HomePage(getDriver());
         homePage.get();
         assertThat(homePage.isSignInButtonDisplayed()).isFalse();
+    }
+
+    @Step("Login as QA User")
+    public void setupLoginUser(){
+        Reporter.log("Logged in as QA USer ming shim");
     }
 }
