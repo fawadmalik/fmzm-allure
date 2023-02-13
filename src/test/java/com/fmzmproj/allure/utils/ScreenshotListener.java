@@ -1,0 +1,26 @@
+package com.fmzmproj.allure.utils;
+
+import io.qameta.allure.Attachment;
+import com.fmzmproj.allure.testscripts.TestBase;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.testng.ITestResult;
+import org.testng.TestListenerAdapter;
+
+public class ScreenshotListener extends TestListenerAdapter {
+
+    @Attachment(value = "Failure screenshot", type = "image/png")
+    public byte[] attachFailedScreenshot(WebDriver driver) {
+        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+    }
+
+    @Override
+    public void onTestFailure(ITestResult result) {
+        if (!result.isSuccess()) {
+            Object currentClass = result.getInstance();
+            WebDriver driver = ((TestBase) currentClass).getDriver();
+            attachFailedScreenshot(driver);
+        }
+    }
+}
